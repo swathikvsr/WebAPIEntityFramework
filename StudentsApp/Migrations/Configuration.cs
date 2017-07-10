@@ -58,10 +58,11 @@ namespace StudentsApp.Migrations
             context.SaveChanges();
             context.Students.AddOrUpdate(
               p => p.Id,
-              new Student { Id = 1, StudentName = "swat", Degree = context.Degrees.FirstOrDefault(d => d.Id ==1 )},
-              new Student { Id = 2, StudentName = "swat1", Degree = context.Degrees.FirstOrDefault(d => d.Id == 2) }
+              new Student { Id = 1, StudentName = "swat", Degree = context.Degrees.FirstOrDefault(d => d.Id ==1 ), CourseList = courseList},
+              new Student { Id = 2, StudentName = "swat1", Degree = context.Degrees.FirstOrDefault(d => d.Id == 2), CourseList = courseList1 }
               //new Student { Id = 3, StudentName = "swat2", CourseList = courseList, Degree = new Degree { DegreeName = "Arts", CourseList = courseList } }
             );
-        }
+            context.SaveChanges();
+      }
     }
 }
