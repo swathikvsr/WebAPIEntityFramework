@@ -27,13 +27,32 @@ namespace StudentsApp.Controllers
         [ResponseType(typeof(Student))]
         public async Task<IHttpActionResult> GetStudent(int id)
         {
-            Student student = await db.Students.FindAsync(id);
-            if (student == null)
-            {
-                return NotFound();
-            }
+            //Student student = await db.Students.FindAsync(id);
+            //if (student == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return Ok(student);
+           var std = from student in db.Students
+             where student.Id == id
+             select new
+             {
+                 StudentName = student.StudentName,
+                 Courses = from courses in db.Courses
+                           from s in courses.Students
+                           where s.Id == id
+                           select courses.CourseName,
+                  degree = from degree in db.Degrees
+                           from s in degree.Students where s.Id == id select degree.DegreeName 
+              };
+            var std1 = from courses in db.Courses
+                      from s in courses.Students
+                      where s.Id == id
+                      select new
+                      {
+                          CourseName = courses.CourseName
+                      };
+            return Ok(std);
         }
 
         // PUT: api/Students/5
